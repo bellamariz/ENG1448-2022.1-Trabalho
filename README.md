@@ -1,5 +1,6 @@
 ### ENG1448 - Computação Digital - 2022.1
-Alunos: 
+<t> Alunos: 
 - Isabella Mariz 
 - Rachel Szenberg
-Professor: Felipe Calliari
+
+<t> Professor: Felipe Calliari
