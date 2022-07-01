@@ -1,0 +1,6 @@
+work	"main.vhd"
+work	"u_alu.vhd"
+work	"u_bcd.vhd"
+work	"u_cpu.vhd"
+work	"u_lcd.vhd"
+work	"u_ram.vhd"

@@ -1,0 +1,2 @@
+vhdl isim_temp "u_bcd.vhd"
+vhdl isim_temp "u_lcd.vhd"

@@ -1,0 +1,12 @@
+AR u_alu behavioral D:/ProjetoFinal/ProjetoFinal/u_alu.vhd sub00/vhpl03 1656509383
+AR main behavioral D:/ProjetoFinal/ProjetoFinal/main.vhd sub00/vhpl11 1656509391
+EN u_bcd NULL D:/ProjetoFinal/ProjetoFinal/u_bcd.vhd sub00/vhpl00 1656509380
+AR u_ram rtl D:/ProjetoFinal/ProjetoFinal/u_ram.vhd sub00/vhpl07 1656509387
+EN u_ram NULL D:/ProjetoFinal/ProjetoFinal/u_ram.vhd sub00/vhpl06 1656509386
+EN u_alu NULL D:/ProjetoFinal/ProjetoFinal/u_alu.vhd sub00/vhpl02 1656509382
+AR u_lcd behavioral D:/ProjetoFinal/ProjetoFinal/u_lcd.vhd sub00/vhpl09 1656509389
+EN main NULL D:/ProjetoFinal/ProjetoFinal/main.vhd sub00/vhpl10 1656509390
+EN u_lcd NULL D:/ProjetoFinal/ProjetoFinal/u_lcd.vhd sub00/vhpl08 1656509388
+AR u_cpu behavioral D:/ProjetoFinal/ProjetoFinal/u_cpu.vhd sub00/vhpl05 1656509385
+EN u_cpu NULL D:/ProjetoFinal/ProjetoFinal/u_cpu.vhd sub00/vhpl04 1656509384
+AR u_bcd behavioral D:/ProjetoFinal/ProjetoFinal/u_bcd.vhd sub00/vhpl01 1656509381

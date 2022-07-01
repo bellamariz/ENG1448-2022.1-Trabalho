@@ -1,0 +1,36 @@
+V3 18
+FL D:/ProjetoFinal/ProjetoFinal/main.vhd 2022/06/29.10:22:30 P.20131013
+EN work/main 1656509390 FL D:/ProjetoFinal/ProjetoFinal/main.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/main/Behavioral 1656509391 \
+      FL D:/ProjetoFinal/ProjetoFinal/main.vhd EN work/main 1656509390 \
+      AR work/u_cpu/Behavioral 1656509385 AR work/u_ram/rtl 1656509387 \
+      AR work/u_lcd/Behavioral 1656509389
+FL D:/ProjetoFinal/ProjetoFinal/u_alu.vhd 2022/06/29.08:53:09 P.20131013
+EN work/u_alu 1656509382 FL D:/ProjetoFinal/ProjetoFinal/u_alu.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/u_alu/Behavioral 1656509383 \
+      FL D:/ProjetoFinal/ProjetoFinal/u_alu.vhd EN work/u_alu 1656509382
+FL D:/ProjetoFinal/ProjetoFinal/u_bcd.vhd 2022/06/29.10:10:55 P.20131013
+EN work/u_bcd 1656509380 FL D:/ProjetoFinal/ProjetoFinal/u_bcd.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/u_bcd/Behavioral 1656509381 \
+      FL D:/ProjetoFinal/ProjetoFinal/u_bcd.vhd EN work/u_bcd 1656509380
+FL D:/ProjetoFinal/ProjetoFinal/u_cpu.vhd 2022/06/29.10:29:16 P.20131013
+EN work/u_cpu 1656509384 FL D:/ProjetoFinal/ProjetoFinal/u_cpu.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/u_cpu/Behavioral 1656509385 \
+      FL D:/ProjetoFinal/ProjetoFinal/u_cpu.vhd EN work/u_cpu 1656509384 \
+      AR work/u_alu/Behavioral 1656509383
+FL D:/ProjetoFinal/ProjetoFinal/u_lcd.vhd 2022/06/29.09:35:53 P.20131013
+EN work/u_lcd 1656509388 FL D:/ProjetoFinal/ProjetoFinal/u_lcd.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/u_lcd/Behavioral 1656509389 \
+      FL D:/ProjetoFinal/ProjetoFinal/u_lcd.vhd EN work/u_lcd 1656509388 \
+      AR work/u_bcd/Behavioral 1656509381
+FL D:/ProjetoFinal/ProjetoFinal/u_ram.vhd 2022/06/29.10:07:49 P.20131013
+EN work/u_ram 1656509386 FL D:/ProjetoFinal/ProjetoFinal/u_ram.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181 \
+      PB ieee/MATH_REAL 1381692182
+AR work/u_ram/rtl 1656509387 \
+      FL D:/ProjetoFinal/ProjetoFinal/u_ram.vhd EN work/u_ram 1656509386

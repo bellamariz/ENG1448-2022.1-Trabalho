@@ -26,6 +26,7 @@ architecture Behavioral of u_alu is
 
 begin
 	process(A, B, CMD, C_in)
+		variable tmp : STD_LOGIC_VECTOR(8 downto 0);
 	begin 
 		if (CMD(7 downto 4) = "0000") then 		-- ADD => S <= A + B
 			TEMP <= STD_LOGIC_VECTOR( unsigned('0' & A) + unsigned('0' & B) );
@@ -33,13 +34,15 @@ begin
 			TEMP <= STD_LOGIC_VECTOR( unsigned('0' & A) - unsigned('0' & B) );
 			
 		elsif (CMD(7 downto 4) = "0010") and (CMD(1 downto 0) = "00") then -- INC => S <= A + 1
-			TEMP <= STD_LOGIC_VECTOR( unsigned('0' & A) + unsigned(x"00" & '1') );
+			TEMP <= STD_LOGIC_VECTOR( unsigned('0' & A) + 1 );
 		elsif (CMD(7 downto 4) = "0010") and (CMD(1 downto 0) = "01") then -- INCC => S <= A + CARRY
-			TEMP <= STD_LOGIC_VECTOR( unsigned('0' & A) + unsigned(x"00" & C_in) );
+			tmp := x"00" & C_in;
+			TEMP <= STD_LOGIC_VECTOR( unsigned('0' & A) + unsigned(tmp) );
 		elsif (CMD(7 downto 4) = "0010") and (CMD(1 downto 0) = "10") then -- DEC => S <= A - 1
-			TEMP <= STD_LOGIC_VECTOR( unsigned('0' & A) - unsigned(x"00" & '1') );
+			TEMP <= STD_LOGIC_VECTOR( unsigned('0' & A) - 1 );
 		elsif (CMD(7 downto 4) = "0010") and (CMD(1 downto 0) = "11") then -- DECC => S <= A - CARRY
-			TEMP <= STD_LOGIC_VECTOR( unsigned('0' & A) - unsigned(x"00" & C_in) );
+			tmp := x"00" & C_in;
+			TEMP <= STD_LOGIC_VECTOR( unsigned('0' & A) - unsigned(tmp) );
 		
 		elsif (CMD(7 downto 4) = "0011") then 	-- AND => S <= A AND B
 			TEMP <=  ('0' & A) and ('0' & B);		
