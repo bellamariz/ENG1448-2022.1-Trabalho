@@ -1,6 +1,0 @@
-vhdl isim_temp "u_bcd.vhd"
-vhdl isim_temp "u_alu.vhd"
-vhdl isim_temp "u_ram.vhd"
-vhdl isim_temp "u_lcd.vhd"
-vhdl isim_temp "u_cpu.vhd"
-vhdl isim_temp "main.vhd"

@@ -1,8 +1,8 @@
 INTSTYLE=ise
-INFILE=D:\ProjetoFinal\ProjetoFinal\main.ncd
-OUTFILE=D:\ProjetoFinal\ProjetoFinal\main.bit
+INFILE=C:\Users\aula\Downloads\ProjetoFinal_v2\ProjetoFinal\main.ncd
+OUTFILE=C:\Users\aula\Downloads\ProjetoFinal_v2\ProjetoFinal\main.bit
 FAMILY=Spartan3E
 PART=xc3s500e-4fg320
-WORKINGDIR=D:\ProjetoFinal\ProjetoFinal
+WORKINGDIR=C:\Users\aula\Downloads\ProjetoFinal_v2\ProjetoFinal
 LICENSE=WebPack
 USER_INFO=211165492_176193773_0_658

@@ -4,15 +4,17 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity u_cpu is
 	port (
-		CLK 		: in 	STD_LOGIC;
-		RESET		: in 	STD_LOGIC;
-		DOUT    	: in 	STD_LOGIC_VECTOR(7 downto 0);
-        POS_255 	: in 	STD_LOGIC_VECTOR(7 downto 0);
-		DIN     	: out   STD_LOGIC_VECTOR(7 downto 0);
-        ADDR    	: out   STD_LOGIC_VECTOR(7 downto 0);
-		WE 		    : out	STD_LOGIC;
-		LEDS		: out   STD_LOGIC_VECTOR(7 downto 0);
-		CPU_READY	: out	STD_LOGIC
+		CLK 		  : in 	STD_LOGIC;
+		RESET		  : in 	STD_LOGIC;
+		DISPLAY_READY : in 	STD_LOGIC;
+		DOUT    	  : in 	STD_LOGIC_VECTOR(7 downto 0);
+        POS_255 	  : in 	STD_LOGIC_VECTOR(7 downto 0);
+		DIN     	  : out STD_LOGIC_VECTOR(7 downto 0);
+        ADDR    	  : out STD_LOGIC_VECTOR(7 downto 0);
+		WE 		      : out	STD_LOGIC;
+		LEDS		  : out STD_LOGIC_VECTOR(7 downto 0);
+		NEW_IR_READY  : out	STD_LOGIC;
+		MBR_OUT		  : out STD_LOGIC_VECTOR(7 downto 0)
 	);
 end u_cpu;
 
@@ -33,8 +35,8 @@ architecture Behavioral of u_cpu is
 	signal RD : STD_LOGIC_VECTOR(7 downto 0) := x"00";
 	
 	-- FSM para as operacoes da cpu
-	type FSM_CPU is (FETCH, DECODE, EXECUTE);
-	signal STATE : FSM_CPU := FETCH;
+	type FSM_CPU is (IDLE, FETCH, DECODE, EXECUTE);
+	signal STATE : FSM_CPU := IDLE;
 	
 	-- contador para slow down o clock da cpu
 	-- quantos bits precisamos pro clock ser de 2 segundos? 20ns x 10^8 = 2s
@@ -56,6 +58,7 @@ begin
 	-- importar modulo da ALU
 	alu : entity work.u_alu(Behavioral)
 		port map (
+			RESET	=> RESET,
 			A 		=> ALU_A,
 			B 		=> ALU_B,
 			CMD 	=> ALU_CMD,
@@ -80,17 +83,19 @@ begin
 			MAR 		  <= x"00";
 			MBR 		  <= "00000000";
 			SP  		  <= "11111110";
-			STATE 	      <= FETCH;
-		
-		elsif rising_edge(CLK) then
-			CPU_READY <= '0';
+			STATE 	      <= IDLE;
 			
+		elsif rising_edge(CLK) then
+			NEW_IR_READY <= '0';
 			case STATE is
-				
+				when IDLE =>
+					if DISPLAY_READY = '1' then
+						STATE <= FETCH;
+					end if;
 				-- FETCH instruction from ram
 				when FETCH =>
+					NEW_IR_READY <= '1';
 					IR <= DOUT;
-					CPU_READY <= '1';
 					
 					-- POP operation
 					if IR(7 downto 4) = "1000" and IR(1 downto 0) = "01" then

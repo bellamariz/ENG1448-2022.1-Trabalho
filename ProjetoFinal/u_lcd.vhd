@@ -6,11 +6,12 @@ entity u_lcd is
 	port(
 		CLK 						: in STD_LOGIC;
 		RESET						: in STD_LOGIC;
-		UPDATE_LCD					: in STD_LOGIC;
+		NEW_IR_READY				: in STD_LOGIC;
 		DATA_IN						: in STD_LOGIC_VECTOR(15 downto 0); -- IR & POS 255 
 		DATA 						: out STD_LOGIC_VECTOR(3 downto 0);
 		LCD_E, LCD_RS, LCD_RW 	    : out STD_LOGIC;
-		SF 							: out STD_LOGIC
+		SF 							: out STD_LOGIC;
+		DISPLAY_READY				: out STD_LOGIC
 	);
 
 end u_lcd;
@@ -134,6 +135,7 @@ architecture Behavioral of u_lcd is
 		2 => "1100", -- C 
 		3 => "0001" -- 1 
 	); 
+	signal BIN : STD_LOGIC_VECTOR(7 downto 0) := DATA_IN(7 downto 0);
 	
 begin
 
@@ -142,7 +144,7 @@ begin
 			CLK			=> CLK,
 			RESET		=> RESET,
 			START 		=> START,
-			BIN 		=> DATA_IN(7 downto 0),
+			BIN 		=> BIN,
 			BCD2 		=> BCD2, 
 			BCD1		=> BCD1,	
 			BCD0		=> BCD0,	
@@ -151,9 +153,11 @@ begin
 		);
 	
 	
-	process(CLK)
+	process(CLK, RESET)
 	begin
-		if rising_edge(CLK) then
+		if RESET = '1' then
+			TIME_COUNT <= (others => '0');
+		elsif rising_edge(CLK) then
 			if (TIME_RESET = '1') then
 				TIME_COUNT <= (others => '0');
 			else
@@ -162,24 +166,29 @@ begin
 		end if;
 	end process;
 	
-	maq_estado : process(CLK)
+	maq_estado : process(CLK, RESET)
 		variable IDX : natural;
-		variable str_LCD : STD_LOGIC_VECTOR(95 downto 0);
+		variable STR_LCD : STD_LOGIC_VECTOR(95 downto 0);
 	begin
-		if rising_edge(CLK) then
+		if RESET = '1' then
+			STATE <= IDLE;
+		
+		elsif rising_edge(CLK) then
 			case STATE is
 				when IDLE =>
+					DISPLAY_READY <= '0';
 					REG_SELECT <= '0';
 					ENABLE <= '0';
 					IDX := 0;
 					TIME_COUNT_LIMIT <= TIME_READY;
-					DATA_REG <= "0011"; -- irei para INIT_A --> data = 3h
+					DATA_REG <= "0011"; -- data = 3h
 					if (TIME_RESET = '1') then
 						STATE <= INIT_A;
 						TIME_COUNT_LIMIT <= TIME_ENABLE; -- wait 12 cycles
 					end if;
 					
 				when INIT_A =>
+					DISPLAY_READY <= '0';
 					ENABLE <= '1';
 					if (TIME_RESET = '1') then 
 						TIME_COUNT_LIMIT <= TIME_DATA(IDX);
@@ -188,12 +197,13 @@ begin
 					end if;
 					
 				when INIT_B =>
+					DISPLAY_READY <= '0';
 					ENABLE <= '0';
 					if (IDX < 3) then
 						DATA_REG <= "0011"; -- data = 3h
 					elsif (IDX = 3) then
 						DATA_REG <= "0010"; -- data = 2h
-					else -- irei para CONF_A 
+					else
 						DATA_REG <= "0010"; -- data = 2h (0x28)
 					end if;
 					
@@ -208,6 +218,7 @@ begin
 					end if;
 
 				when CONF_A =>
+					DISPLAY_READY <= '0';
 					ENABLE <= '1';
 					if (TIME_RESET = '1') then
 						if UPPER = '1' then 
@@ -218,14 +229,14 @@ begin
 					end if;
 					
 				when CONF_B =>
+					DISPLAY_READY <= '0';
 					ENABLE <= '0';
 					if UPPER = '1' then
-						DATA_REG <= CONFIG_UPPER(IDX);
---						if IDX = 4 then -- write msg
---							DATA_REG <= DATA_UPPER(0);
---						else 
---							DATA_REG <= CONFIG_UPPER(IDX);
---						end if;
+						if IDX = 4 then -- write msg
+							DATA_REG <= "0010";
+						else 
+							DATA_REG <= CONFIG_UPPER(IDX);
+						end if;
 					else 
 						DATA_REG <= CONFIG_LOWER(IDX);
 					end if;
@@ -233,7 +244,6 @@ begin
 					if (TIME_RESET = '1') then
 						UPPER <= not UPPER;
 						if (IDX = 4) then
-							-- LCD_READY <= '1';
 							STATE <= WAIT_CLEAR;
 							TIME_COUNT_LIMIT <= TIME_CLEAR; -- wait 1640us for clear
 							IDX := 0;
@@ -246,38 +256,127 @@ begin
 				-- faz um clear entre config e write	
 				when WAIT_CLEAR =>
 					if (TIME_RESET = '1') then
+						DISPLAY_READY <= '1';
 						STATE <= WAIT_NEW_CMD;
 					end if;
 				
 				-- espera aqui enquanto CPU nao envia uma nova instrucao
 				when WAIT_NEW_CMD =>
+					DISPLAY_READY <= '1';
 					REG_SELECT <= '0';
 					ENABLE <= '0';
 					IDX := 0;
 					
 					-- CPU enviou nova instrucao pra LCD exibir
-					if (UPDATE_LCD) = '1' then
+					if (NEW_IR_READY) = '1' then
 						REG_SELECT <= '1';
 						STATE <= WRITE_A;
 						TIME_COUNT_LIMIT <= TIME_ENABLE;
 						
-						--TODO: terminar de decodificar as strings
+						-- decodificar as strings
+						-- ALU
 						if DATA_IN(15 downto 12) = "0000" then -- add
-							str_LCD := str_add;
+							STR_LCD := str_add;
 						
 						elsif DATA_IN(15 downto 12) = "0001" then -- sub
-							str_LCD := str_sub;
+							STR_LCD := str_sub;
+							
+						elsif DATA_IN(15 downto 12) = "0010" and DATA_IN(9 downto 8) = "00" then -- inc
+							STR_LCD := str_inc;
+							
+						elsif DATA_IN(15 downto 12) = "0010" and DATA_IN(9 downto 8) = "01" then -- incc
+							STR_LCD := str_incc;
+							
+						elsif DATA_IN(15 downto 12) = "0010" and DATA_IN(9 downto 8) = "10" then -- dec
+							STR_LCD := str_dec;
+						
+						elsif DATA_IN(15 downto 12) = "0010" and DATA_IN(9 downto 8) = "11" then -- decc
+							STR_LCD := str_decc;
+							
+						elsif DATA_IN(15 downto 12) = "0011" then -- and
+							STR_LCD := str_and;
+							
+						elsif DATA_IN(15 downto 12) = "0100" then -- or
+							STR_LCD := str_or;
+							
+						elsif DATA_IN(15 downto 12) = "0101" then -- not
+							STR_LCD := str_not;
+						
+						elsif DATA_IN(15 downto 12) = "0110" then -- xor
+							STR_LCD := str_xor;
+							
+						elsif DATA_IN(15 downto 12) = "0111" and DATA_IN(9 downto 8) = "00" then -- rol
+							STR_LCD := str_rol;
+							
+						elsif DATA_IN(15 downto 12) = "0111" and DATA_IN(9 downto 8) = "01" then -- ror
+							STR_LCD := str_ror;
+							
+						elsif DATA_IN(15 downto 12) = "0111" and DATA_IN(9 downto 8) = "10" then -- lsl
+							STR_LCD := str_lsl;
+						
+						elsif DATA_IN(15 downto 12) = "0111" and DATA_IN(9 downto 8) = "11" then -- lsr
+							STR_LCD := str_lsr;
+						
+						-- MEMORY
+						elsif DATA_IN(15 downto 12) = "1000" and DATA_IN(9 downto 8) = "00" then -- push
+							STR_LCD := str_push;
+						
+						elsif DATA_IN(15 downto 12) = "1000" and DATA_IN(9 downto 8) = "01" then -- pop
+							STR_LCD := str_pop;
 							
 						elsif DATA_IN(15 downto 12) = "1000" and DATA_IN(9 downto 8) = "11" then -- ld
-							str_LCD := str_ld;
+							STR_LCD := str_ld;
+							
+						elsif DATA_IN(15 downto 12) = "1001" then -- ldr
+							STR_LCD := str_ldr;
 							
 						elsif DATA_IN(15 downto 12) = "1010" then -- str
-							str_LCD := str_str;
+							STR_LCD := str_str;
+							
+						-- JUMPS
+						elsif DATA_IN(15 downto 12) = "1011" and DATA_IN(9 downto 8) = "00" then -- jmp
+							STR_LCD := str_jmp;
+							
+						elsif DATA_IN(15 downto 12) = "1011" and DATA_IN(9 downto 8) = "01" then -- jmpr
+							STR_LCD := str_jmpr;
+							
+						elsif DATA_IN(15 downto 12) = "1011" and DATA_IN(9 downto 8) = "10" then -- bz
+							STR_LCD := str_bz;
+							
+						elsif DATA_IN(15 downto 12) = "1011" and DATA_IN(9 downto 8) = "11" then -- bnz
+							STR_LCD := str_bnz;
+							
+						elsif DATA_IN(15 downto 12) = "1100" and DATA_IN(9 downto 8) = "00" then -- bcs
+							STR_LCD := str_bcs;
+							
+						elsif DATA_IN(15 downto 12) = "1100" and DATA_IN(9 downto 8) = "01" then -- bcc
+							STR_LCD := str_bcc;
+							
+						elsif DATA_IN(15 downto 12) = "1100" and DATA_IN(9 downto 8) = "10" then -- beq
+							STR_LCD := str_beq;
+							
+						elsif DATA_IN(15 downto 12) = "1100" and DATA_IN(9 downto 8) = "11" then -- bneq
+							STR_LCD := str_bneq;
+							
+						elsif DATA_IN(15 downto 12) = "1101" and DATA_IN(9 downto 8) = "00" then -- bgt
+							STR_LCD := str_bgt;
+							
+						elsif DATA_IN(15 downto 12) = "1101" and DATA_IN(9 downto 8) = "01" then -- bgez
+							STR_LCD := str_bgez;
+							
+						elsif DATA_IN(15 downto 12) = "1101" and DATA_IN(9 downto 8) = "10" then -- blt
+							STR_LCD := str_blt;
+							
+						elsif DATA_IN(15 downto 12) = "1101" and DATA_IN(9 downto 8) = "11" then -- blez
+							STR_LCD := str_blez;
+							
+						elsif DATA_IN(15 downto 12) = "1111" then
+							STR_LCD := str_halt;
 						end if;	
 
 						for i in 0 to 11 loop
-							DATA_UPPER(i) <= str_LCD(95-(8*i) downto 92-(8*i)); --95 downto 92; 87 downto 84; 79 downto 76; .....; 7 downto 4 -- 4 primeiros
-							DATA_LOWER(i) <= str_LCD(91-(8*i) downto 88-(8*i)); --91 downto 88; 83 downto 80; 75 donwto 72; .....; 3 downto 0 -- 4 ultimos
+							DATA_UPPER(i+1) <= STR_LCD(7+(8*i) downto 4+(8*i)); -- 7 downto 4; 15 downto 12; 23 donwto 20; .....
+							DATA_LOWER(i+1) <= STR_LCD(3+(8*i) downto (8*i));   -- 3 downto 0; 11 downto 8; 19 downto 16; ......
 						end loop;
 		
 						DATA_UPPER(40) <= "0011";
@@ -291,6 +390,7 @@ begin
 
 
 				when WRITE_A =>
+					DISPLAY_READY <= '0';
 					REG_SELECT <= '1';
 					ENABLE <= '1';
 					if (TIME_RESET = '1') then
@@ -302,10 +402,15 @@ begin
 					end if;
 
 				when WRITE_B =>
+					DISPLAY_READY <= '0';
 					REG_SELECT <= '1';
 					ENABLE <= '0';
 					if UPPER = '1' then
-						DATA_REG <= DATA_UPPER(IDX);
+						if (IDX = 80) then -- terminou mensagem
+							DATA_REG <= "0010";
+						else 
+							DATA_REG <= DATA_UPPER(IDX);
+						end if;
 					else
 						DATA_REG <= DATA_LOWER(IDX);
 					end if;
@@ -332,7 +437,7 @@ begin
 	LCD_E 		<= ENABLE;
 	SF 			<= '1';
 	LCD_RW 		<= '0';
-	TIME_RESET 		<= '1' when TIME_COUNT = TIME_COUNT_LIMIT else '0';
+	TIME_RESET 	<= '1' when TIME_COUNT = TIME_COUNT_LIMIT else '0';
 	
 end Behavioral;
 

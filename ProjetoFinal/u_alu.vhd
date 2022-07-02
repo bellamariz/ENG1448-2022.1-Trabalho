@@ -3,12 +3,13 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity u_alu is
-	port (						 
+	port (
+		RESET	: IN STD_LOGIC;
 		A 		: IN STD_LOGIC_VECTOR(7 downto 0);  -- Ri
 		B 		: IN STD_LOGIC_VECTOR(7 downto 0);  -- Ri
 		CMD 	: IN STD_LOGIC_VECTOR(7 downto 0);  -- opcode
-		C_in 	: IN STD_LOGIC;  							-- overflow
-		C_out : OUT STD_LOGIC; 							-- overflow
+		C_in 	: IN STD_LOGIC;  					-- overflow
+		C_out : OUT STD_LOGIC; 						-- overflow
 		FLAGS : OUT STD_LOGIC_VECTOR(4 downto 0);	-- flags (leds)
 		S 		: OUT STD_LOGIC_VECTOR(7 downto 0)	-- saida
 	);
@@ -75,7 +76,7 @@ begin
 	GREATER <= '1' when A > B else '0';
 	SMALLER <= '1' when A < B else '0';
 	ZERO <= '1' when TEMP(7 downto 0) = x"00" else '0';
-	FLAGS <= EQUAL & GREATER & SMALLER & ZERO & TEMP(8);
+	FLAGS <= EQUAL & GREATER & SMALLER & ZERO & TEMP(8) when RESET = '0' else "00000";
 
 end Behavioral;
 

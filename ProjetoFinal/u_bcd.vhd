@@ -6,8 +6,8 @@ entity u_bcd is
 	port(
 		CLK, RESET 	: in STD_LOGIC;
 		START 		: in STD_LOGIC;
-		BIN 			: in STD_LOGIC_VECTOR(7 downto 0);
-		BCD2 			: out STD_LOGIC_VECTOR(3 downto 0);
+		BIN 		: in STD_LOGIC_VECTOR(7 downto 0);
+		BCD2 		: out STD_LOGIC_VECTOR(3 downto 0);
 		BCD1, BCD0 	: out STD_LOGIC_VECTOR(3 downto 0);
 		READY 		: out STD_LOGIC;
 		DONE_TICK 	: out STD_LOGIC
@@ -36,15 +36,15 @@ begin
 		if rising_edge(CLK) then
 			if (RESET = '1') then
 				STATE_REG <=  IDLE;
-				P2S_REG 	 <= (others => '0');
-				N_REG 	 <= (others => '0');
+				P2S_REG   <= (others => '0');
+				N_REG 	  <= (others => '0');
 				BCD2_REG  <= (others => '0');
 				BCD1_REG  <= (others => '0');
 				BCD0_REG  <= (others => '0');
 			else
 				STATE_REG <= STATE_NEXT;
-				P2S_REG 	 <= P2S_NEXT;
-				N_REG 	 <= N_NEXT;
+				P2S_REG   <= P2S_NEXT;
+				N_REG 	  <= N_NEXT;
 				BCD2_REG  <= BCD2_NEXT;
 				BCD1_REG  <= BCD1_NEXT;
 				BCD0_REG  <= BCD0_NEXT;

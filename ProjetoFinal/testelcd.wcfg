@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/main_tb_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="C:/Users/aula/Downloads/ProjetoFinal_v2/ProjetoFinal/main_tb_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="main_tb" />
             <top_module name="math_real" />
@@ -12,7 +12,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="12" />
+   <WVObjectSize size="25" />
    <wvobject fp_name="/main_tb/clk" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -45,20 +45,82 @@
       <obj_property name="ElementShortName">dout_lcd[3:0]</obj_property>
       <obj_property name="ObjectShortName">dout_lcd[3:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/main_tb/clk_period" type="other" db_ref_id="1">
-      <obj_property name="ElementShortName">clk_period</obj_property>
-      <obj_property name="ObjectShortName">clk_period</obj_property>
-   </wvobject>
    <wvobject fp_name="/main_tb/uut/lcd/state" type="other" db_ref_id="1">
       <obj_property name="ElementShortName">state</obj_property>
       <obj_property name="ObjectShortName">state</obj_property>
    </wvobject>
-   <wvobject fp_name="/main_tb/uut/cpu/state" type="other" db_ref_id="1">
-      <obj_property name="ElementShortName">state</obj_property>
-      <obj_property name="ObjectShortName">state</obj_property>
+   <wvobject fp_name="/main_tb/uut/clk_slow" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_slow</obj_property>
+      <obj_property name="ObjectShortName">clk_slow</obj_property>
    </wvobject>
-   <wvobject fp_name="/main_tb/uut/cpu/cpu_ready" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">cpu_ready</obj_property>
-      <obj_property name="ObjectShortName">cpu_ready</obj_property>
+   <wvobject fp_name="/main_tb/uut/cpu/ir" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ir[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ir[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/main_tb/uut/cpu/pc" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">pc[7:0]</obj_property>
+      <obj_property name="ObjectShortName">pc[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/main_tb/uut/cpu/mar" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mar[7:0]</obj_property>
+      <obj_property name="ObjectShortName">mar[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/main_tb/uut/cpu/mbr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mbr[7:0]</obj_property>
+      <obj_property name="ObjectShortName">mbr[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/main_tb/uut/cpu/ra" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ra[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ra[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/main_tb/uut/cpu/rb" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rb[7:0]</obj_property>
+      <obj_property name="ObjectShortName">rb[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/main_tb/uut/cpu/rc" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rc[7:0]</obj_property>
+      <obj_property name="ObjectShortName">rc[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/main_tb/uut/cpu/rd" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rd[7:0]</obj_property>
+      <obj_property name="ObjectShortName">rd[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/main_tb/uut/lcd/data_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">data_in[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider21" type="divider">
+      <obj_property name="label">RAM</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/main_tb/uut/memory/pos_255" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">pos_255[7:0]</obj_property>
+      <obj_property name="ObjectShortName">pos_255[7:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider25" type="divider">
+      <obj_property name="label">LCD</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/main_tb/uut/lcd/bcd2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bcd2[3:0]</obj_property>
+      <obj_property name="ObjectShortName">bcd2[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/main_tb/uut/lcd/bcd1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bcd1[3:0]</obj_property>
+      <obj_property name="ObjectShortName">bcd1[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/main_tb/uut/lcd/bcd0" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bcd0[3:0]</obj_property>
+      <obj_property name="ObjectShortName">bcd0[3:0]</obj_property>
    </wvobject>
 </wave_config>
