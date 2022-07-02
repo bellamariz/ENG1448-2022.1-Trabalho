@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -o "C:/Users/aula/Downloads/ProjetoFinal_v2/ProjetoFinal/main_tb_isim_beh.exe" -prj "C:/Users/aula/Downloads/ProjetoFinal_v2/ProjetoFinal/main_tb_beh.prj" "work.main_tb" 
+-intstyle "ise" -incremental -o "/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/main_tb_isim_beh.exe" -prj "/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/main_tb_beh.prj" "work.main_tb" 

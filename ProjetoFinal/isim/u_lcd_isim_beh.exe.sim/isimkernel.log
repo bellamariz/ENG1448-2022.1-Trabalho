@@ -1,0 +1,10 @@
+Command line:
+   u_lcd_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  47468
+
+Sat Jul  2 16:47:06 2022
+
+
+ Elaboration Time: 0.04 sec

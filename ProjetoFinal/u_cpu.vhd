@@ -4,17 +4,17 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity u_cpu is
 	port (
-		CLK 		  : in 	STD_LOGIC;
-		RESET		  : in 	STD_LOGIC;
-		DISPLAY_READY : in 	STD_LOGIC;
-		DOUT    	  : in 	STD_LOGIC_VECTOR(7 downto 0);
-        POS_255 	  : in 	STD_LOGIC_VECTOR(7 downto 0);
-		DIN     	  : out STD_LOGIC_VECTOR(7 downto 0);
-        ADDR    	  : out STD_LOGIC_VECTOR(7 downto 0);
+		CLK 		  		: in 	STD_LOGIC;
+		RESET		  		: in 	STD_LOGIC;
+		DISPLAY_READY 	: in 	STD_LOGIC;
+		DOUT    	  		: in 	STD_LOGIC_VECTOR(7 downto 0);
+      POS_255 	  		: in 	STD_LOGIC_VECTOR(7 downto 0);
+		DIN     	  		: out STD_LOGIC_VECTOR(7 downto 0);
+      ADDR    	  		: out STD_LOGIC_VECTOR(7 downto 0);
 		WE 		      : out	STD_LOGIC;
-		LEDS		  : out STD_LOGIC_VECTOR(7 downto 0);
-		NEW_IR_READY  : out	STD_LOGIC;
-		MBR_OUT		  : out STD_LOGIC_VECTOR(7 downto 0)
+		LEDS		  		: out STD_LOGIC_VECTOR(7 downto 0);
+		NEW_IR_READY  	: out	STD_LOGIC;
+		MBR_OUT		  	: out STD_LOGIC_VECTOR(7 downto 0)
 	);
 end u_cpu;
 

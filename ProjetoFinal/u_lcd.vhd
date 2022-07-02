@@ -78,9 +78,9 @@ architecture Behavioral of u_lcd is
 	signal BCD2  : STD_LOGIC_VECTOR(3 downto 0) := (others => '0');
 	signal BCD1  : STD_LOGIC_VECTOR(3 downto 0) := (others => '0');
 	signal BCD0  : STD_LOGIC_VECTOR(3 downto 0) := (others => '0');
-	signal START : STD_LOGIC;
-	signal READY : STD_LOGIC;
-	signal DONE_TICK : STD_LOGIC;
+	signal BCD_START : STD_LOGIC;
+	signal BCD_READY : STD_LOGIC;
+	signal BCD_DONE : STD_LOGIC;
 
 
 	------- 2) LCD ORIGINAL
@@ -135,21 +135,21 @@ architecture Behavioral of u_lcd is
 		2 => "1100", -- C 
 		3 => "0001" -- 1 
 	); 
-	signal BIN : STD_LOGIC_VECTOR(7 downto 0) := DATA_IN(7 downto 0);
+	--signal BIN : STD_LOGIC_VECTOR(7 downto 0) := DATA_IN(7 downto 0);
 	
 begin
 
 	bcd : entity work.u_bcd(Behavioral)
 		port map (
 			CLK			=> CLK,
-			RESET		=> RESET,
-			START 		=> START,
-			BIN 		=> BIN,
-			BCD2 		=> BCD2, 
-			BCD1		=> BCD1,	
-			BCD0		=> BCD0,	
-			READY 		=> READY,
-			DONE_TICK 	=> DONE_TICK
+			RESET			=> RESET,
+			START 		=> BCD_START,
+			BIN 			=> DATA_IN(7 downto 0),
+			BCD2 			=> BCD2, 
+			BCD1			=> BCD1,	
+			BCD0			=> BCD0,	
+			READY 		=> BCD_READY,
+			DONE_TICK 	=> BCD_DONE
 		);
 	
 	
@@ -177,6 +177,7 @@ begin
 			case STATE is
 				when IDLE =>
 					DISPLAY_READY <= '0';
+					BCD_START <= '0';
 					REG_SELECT <= '0';
 					ENABLE <= '0';
 					IDX := 0;
@@ -189,6 +190,7 @@ begin
 					
 				when INIT_A =>
 					DISPLAY_READY <= '0';
+					BCD_START <= '0';
 					ENABLE <= '1';
 					if (TIME_RESET = '1') then 
 						TIME_COUNT_LIMIT <= TIME_DATA(IDX);
@@ -198,6 +200,7 @@ begin
 					
 				when INIT_B =>
 					DISPLAY_READY <= '0';
+					BCD_START <= '0';
 					ENABLE <= '0';
 					if (IDX < 3) then
 						DATA_REG <= "0011"; -- data = 3h
@@ -219,6 +222,7 @@ begin
 
 				when CONF_A =>
 					DISPLAY_READY <= '0';
+					BCD_START <= '0';
 					ENABLE <= '1';
 					if (TIME_RESET = '1') then
 						if UPPER = '1' then 
@@ -230,6 +234,7 @@ begin
 					
 				when CONF_B =>
 					DISPLAY_READY <= '0';
+					BCD_START <= '0';
 					ENABLE <= '0';
 					if UPPER = '1' then
 						if IDX = 4 then -- write msg
@@ -257,23 +262,37 @@ begin
 				when WAIT_CLEAR =>
 					if (TIME_RESET = '1') then
 						DISPLAY_READY <= '1';
+						BCD_START <= '1';
 						STATE <= WAIT_NEW_CMD;
 					end if;
 				
 				-- espera aqui enquanto CPU nao envia uma nova instrucao
 				when WAIT_NEW_CMD =>
 					DISPLAY_READY <= '1';
+					BCD_START <= '1';
+					BCD_START <= '0';
 					REG_SELECT <= '0';
 					ENABLE <= '0';
 					IDX := 0;
 					
 					-- CPU enviou nova instrucao pra LCD exibir
 					if (NEW_IR_READY) = '1' then
+						BCD_START <= '1';
 						REG_SELECT <= '1';
 						STATE <= WRITE_A;
 						TIME_COUNT_LIMIT <= TIME_ENABLE;
 						
-						-- decodificar as strings
+						-- decodificar pos_255 da ram pra bcd (linha 2 display)
+						if BCD_DONE = '1' then
+							DATA_UPPER(40) <= "0011";
+							DATA_LOWER(40) <= BCD2;
+							DATA_UPPER(41) <= "0011";
+							DATA_LOWER(41) <= BCD1;
+							DATA_UPPER(42) <= "0011";
+							DATA_LOWER(42) <= BCD0;
+						end if;
+						
+						-- decodificar as strings (linha 1 display)
 						-- ALU
 						if DATA_IN(15 downto 12) = "0000" then -- add
 							STR_LCD := str_add;
@@ -378,13 +397,6 @@ begin
 							DATA_UPPER(i+1) <= STR_LCD(7+(8*i) downto 4+(8*i)); -- 7 downto 4; 15 downto 12; 23 donwto 20; .....
 							DATA_LOWER(i+1) <= STR_LCD(3+(8*i) downto (8*i));   -- 3 downto 0; 11 downto 8; 19 downto 16; ......
 						end loop;
-		
-						DATA_UPPER(40) <= "0011";
-						DATA_LOWER(40) <= BCD2;
-						DATA_UPPER(41) <= "0011";
-						DATA_LOWER(41) <= BCD1;
-						DATA_UPPER(42) <= "0011";
-						DATA_LOWER(42) <= BCD0;
 						
 					end if;
 
@@ -432,7 +444,7 @@ begin
 		end if;
 	end process;
 
-	DATA 		<= DATA_REG;
+	DATA 		   <= DATA_REG;
 	LCD_RS 		<= REG_SELECT;
 	LCD_E 		<= ENABLE;
 	SF 			<= '1';
