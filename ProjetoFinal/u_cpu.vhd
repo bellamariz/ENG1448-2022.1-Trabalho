@@ -474,12 +474,13 @@ begin
 					-- JMP 0x-- --> pc <-- MEM[PC+1]
 					elsif IR(7 downto 4) = "1011" and IR(1 downto 0) = "00" then
 						PC <= DOUT;
-						MAR <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
+						MAR <= DOUT;
+						--MAR <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
 						 
 					-- JMPR Rx --> pc <-- Rx
 					elsif IR(7 downto 4) = "1011" and IR(1 downto 0) = "01" then
 						PC  <= MAR;
-						MAR <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
+						--MAR <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
 						 
 					-- BZ Rx --> if (zero) pc <-- Rx else pc <-- pc + 1
 					elsif IR(7 downto 4) = "1011" and IR(1 downto 0) = "10" then

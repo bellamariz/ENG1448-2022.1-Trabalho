@@ -90,13 +90,13 @@
          <ClosedNode>/main_tb - behavior D:|ProjetoFinal|ProjetoFinal|main_tb.vhd/uut - main - Behavioral/lcd - u_lcd - Behavioral</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>lcd - u_lcd - Behavioral (/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/u_lcd.vhd)</SelectedItem>
+         <SelectedItem>main_tb - behavior (/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/main_tb.vhd)</SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff0000000000000001000000010000000000000000000000000000000002020000000100000001000000640000016d000000020000000000000000000000000200000064ffffffff0000008100000003000000020000016d0000000100000003000000000000000100000003</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
-      <CurrentItem>lcd - u_lcd - Behavioral (/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/u_lcd.vhd)</CurrentItem>
+      <CurrentItem>main_tb - behavior (/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/main_tb.vhd)</CurrentItem>
    </ItemView>
    <ItemView engineview="BehavioralSim" sourcetype="" guiview="Process" >
       <ClosedNodes>
