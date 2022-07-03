@@ -12,8 +12,8 @@ Parsing VHDL file "/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/m
 Parsing VHDL file "/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/main_tb.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 98236 KB
-Fuse CPU Usage: 3570 ms
+Fuse Memory Usage: 98252 KB
+Fuse CPU Usage: 1040 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package numeric_std
@@ -28,6 +28,6 @@ Compiling architecture behavior of entity main_tb
 Time Resolution for simulation is 1ps.
 Compiled 17 VHDL Units
 Built simulation executable /home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/main_tb_isim_beh.exe
-Fuse Memory Usage: 115404 KB
-Fuse CPU Usage: 4290 ms
-GCC CPU Usage: 2360 ms
+Fuse Memory Usage: 115412 KB
+Fuse CPU Usage: 1190 ms
+GCC CPU Usage: 660 ms

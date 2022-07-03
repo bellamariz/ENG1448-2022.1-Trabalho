@@ -14,7 +14,7 @@ entity u_cpu is
 		WE 		      : out	STD_LOGIC;
 		LEDS		  		: out STD_LOGIC_VECTOR(7 downto 0);
 		NEW_IR_READY  	: out	STD_LOGIC;
-		MBR_OUT		  	: out STD_LOGIC_VECTOR(7 downto 0)
+		IR_OUT		  	: out STD_LOGIC_VECTOR(7 downto 0)
 	);
 end u_cpu;
 
@@ -543,8 +543,9 @@ begin
 		end if;
 	end process;
 	
-	-- enderecamento
+	-- saidas CPU
 	ADDR <= MAR;
+	IR_OUT <= IR;
 	
 	-- saidas de LED para CLK e flags da ALU
 	LEDS(7) <= CLK;

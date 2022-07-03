@@ -21,7 +21,8 @@ architecture Behavioral of main is
 	signal DOUT_RAM 	: STD_LOGIC_VECTOR(7 downto 0);
 	signal DIN_LCD		: STD_LOGIC_VECTOR(15 downto 0);
 	signal DIN_RAM 	    : STD_LOGIC_VECTOR(7 downto 0);
-    signal ADDR 		: STD_LOGIC_VECTOR(7 downto 0);
+   signal ADDR 		: STD_LOGIC_VECTOR(7 downto 0);
+   signal IR 		: STD_LOGIC_VECTOR(7 downto 0);
 	signal WE 			: STD_LOGIC;
 	
 	-- sinais de controle
@@ -36,7 +37,7 @@ architecture Behavioral of main is
 begin
 
 	--DIN_LCD <= DOUT_RAM & POS_255;
-	DIN_LCD <= DOUT_RAM & POS_255;
+	DIN_LCD <= IR & POS_255;
 	NEW_IR_READY  <= NEW_IR and not(NEW_IR_REG);
 	--DISPLAY_READY <= DISPLAY_STATUS and not(DISPLAY_STATUS_REG);
 
@@ -78,9 +79,10 @@ begin
 			POS_255 		=> POS_255, 	
 			DIN     		=> DIN_RAM,     	
 			ADDR    		=> ADDR,    	
-			WE 			    => WE, 		
+			WE 			=> WE, 		
 			LEDS			=> LEDS,
-			NEW_IR_READY	=> NEW_IR
+			NEW_IR_READY	=> NEW_IR,
+			IR_OUT		=> IR
 		);
 
 	memory : entity work.u_ram(rtl)

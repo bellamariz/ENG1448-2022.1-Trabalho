@@ -8,7 +8,22 @@
 <!-- Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.    -->
 
 <messages>
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/main.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/u_alu.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/u_bcd.vhd&quot; into library work</arg>
+</msg>
+
 <msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/u_cpu.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/u_lcd.vhd&quot; into library work</arg>
+</msg>
+
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/u_ram.vhd&quot; into library work</arg>
 </msg>
 
 </messages>

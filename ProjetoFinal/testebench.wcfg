@@ -12,7 +12,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="27" />
+   <WVObjectSize size="28" />
    <wvobject fp_name="/main_tb/clk" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -117,6 +117,10 @@
    <wvobject fp_name="/main_tb/uut/lcd/data_in" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">data_in[15:0]</obj_property>
       <obj_property name="ObjectShortName">data_in[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/main_tb/uut/lcd/bcd_ready" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">bcd_ready</obj_property>
+      <obj_property name="ObjectShortName">bcd_ready</obj_property>
    </wvobject>
    <wvobject fp_name="/main_tb/uut/lcd/bcd_start" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">bcd_start</obj_property>
