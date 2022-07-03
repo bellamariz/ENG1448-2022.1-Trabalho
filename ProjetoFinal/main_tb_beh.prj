@@ -1,7 +1,0 @@
-vhdl work "u_bcd.vhd"
-vhdl work "u_alu.vhd"
-vhdl work "u_ram.vhd"
-vhdl work "u_lcd.vhd"
-vhdl work "u_cpu.vhd"
-vhdl work "main.vhd"
-vhdl work "main_tb.vhd"

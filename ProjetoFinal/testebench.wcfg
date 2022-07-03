@@ -66,7 +66,7 @@
    <wvobject fp_name="/main_tb/uut/cpu/ra" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">ra[7:0]</obj_property>
       <obj_property name="ObjectShortName">ra[7:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/main_tb/uut/cpu/rb" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">rb[7:0]</obj_property>
