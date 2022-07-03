@@ -54,7 +54,6 @@ architecture rtl of u_ram is
 		 31 => "10111010", -- BZ   Rc      --> if (zero) go to Rc (26) 
 		 32 => "10110000", -- JMP  29		  --> else go to 29 (loop)
 		 33 => "00011101", -- 29
-		 33 => "11100000", -- DONT CARE
 		 34 => "11100000", -- DONT CARE
 		 35 => "11100000", -- DONT CARE
 		 36 => "01110010", -- LSL  Ra 	  --> LSL(Ra = 01111011) = 11110110 (246)
