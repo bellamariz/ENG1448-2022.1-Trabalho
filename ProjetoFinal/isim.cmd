@@ -1,2 +1,2 @@
 onerror {resume}
-run 11ms;
+run 60ms;

@@ -94,7 +94,7 @@ begin
 					end if;
 				-- FETCH instruction from ram
 				when FETCH =>
-					NEW_IR_READY <= '1';
+					--NEW_IR_READY <= '1';
 					IR <= DOUT;
 					
 					-- POP operation
@@ -416,6 +416,7 @@ begin
 				-- EXECUTE instruction
 				when EXECUTE =>
 					WE <= '0';
+					NEW_IR_READY <= '1';
 					
 					-- ALU operations
 					if (IR(7) = '0') then
@@ -532,7 +533,7 @@ begin
 					
 					end if;
 
-					STATE <= FETCH;
+					STATE <= IDLE;
 			end case;
 		end if;
 	end process;

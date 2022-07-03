@@ -269,28 +269,27 @@ begin
 				-- espera aqui enquanto CPU nao envia uma nova instrucao
 				when WAIT_NEW_CMD =>
 					DISPLAY_READY <= '1';
-					BCD_START <= '1';
-					BCD_START <= '0';
+					--BCD_START <= '1';
 					REG_SELECT <= '0';
 					ENABLE <= '0';
 					IDX := 0;
 					
+					-- decodificar pos_255 da ram pra bcd (linha 2 display)
+					if BCD_DONE = '1' then
+						BCD_START <= '0';
+						DATA_UPPER(40) <= "0011";
+						DATA_LOWER(40) <= BCD2;
+						DATA_UPPER(41) <= "0011";
+						DATA_LOWER(41) <= BCD1;
+						DATA_UPPER(42) <= "0011";
+						DATA_LOWER(42) <= BCD0;
+					end if;
+					
 					-- CPU enviou nova instrucao pra LCD exibir
 					if (NEW_IR_READY) = '1' then
-						BCD_START <= '1';
 						REG_SELECT <= '1';
 						STATE <= WRITE_A;
 						TIME_COUNT_LIMIT <= TIME_ENABLE;
-						
-						-- decodificar pos_255 da ram pra bcd (linha 2 display)
-						if BCD_DONE = '1' then
-							DATA_UPPER(40) <= "0011";
-							DATA_LOWER(40) <= BCD2;
-							DATA_UPPER(41) <= "0011";
-							DATA_LOWER(41) <= BCD1;
-							DATA_UPPER(42) <= "0011";
-							DATA_LOWER(42) <= BCD0;
-						end if;
 						
 						-- decodificar as strings (linha 1 display)
 						-- ALU
@@ -431,6 +430,7 @@ begin
 						UPPER <= not UPPER;
 						TIME_COUNT_LIMIT <= TIME_ENABLE;
 						if (IDX = 80) then -- terminou mensagem
+							BCD_START <= '1';
 							STATE <=  WAIT_NEW_CMD;
 							IDX := 0;
 						else

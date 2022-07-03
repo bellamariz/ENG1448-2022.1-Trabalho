@@ -7,6 +7,14 @@ WARNING: ISim will run in Lite mode. Please refer to the ISim documentation for 
 This is a Lite version of ISim.
 Time resolution is 1 ps
 # onerror resume
-# run 11ms
+# run 60ms
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+# run 5ms
+# run 2ms
+# run 2ms
+# run 2ms
+# restart
+# run 70ms
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
