@@ -1,0 +1,4 @@
+v6 - funcionando display na puc
+v7 - fix do bcd (parte 1 porque nao esta estavel)
+v8 - fix do bcd de verdade (parte 2 porque esta estavel)
+v9 - fix do POP (colocamos o decode 2)
