@@ -10,11 +10,6 @@ Time resolution is 1 ps
 # run 60ms
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
-# run 5ms
-# run 2ms
-# run 2ms
-# run 2ms
-# restart
-# run 70ms
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
+# run 10ms
+Stopped at time : 69932085 ns : File "/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/u_lcd.vhd" Line 173
+# exit 0

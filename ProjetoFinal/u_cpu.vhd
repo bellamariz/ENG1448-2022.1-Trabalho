@@ -35,7 +35,7 @@ architecture Behavioral of u_cpu is
 	signal RD : STD_LOGIC_VECTOR(7 downto 0) := x"00";
 	
 	-- FSM para as operacoes da cpu
-	type FSM_CPU is (IDLE, FETCH, DECODE, EXECUTE);
+	type FSM_CPU is (IDLE, FETCH, DECODE_1, DECODE_2, EXECUTE);
 	signal STATE : FSM_CPU := IDLE;
 	
 	-- contador para slow down o clock da cpu
@@ -63,8 +63,8 @@ begin
 			B 		=> ALU_B,
 			CMD 	=> ALU_CMD,
 			C_in 	=> ALU_CIN,
-			C_out   => ALU_COUT,
-			FLAGS   => ALU_FLAGS,
+			C_out => ALU_COUT,
+			FLAGS => ALU_FLAGS,
 			S 		=> ALU_S
 		);
 		
@@ -78,12 +78,12 @@ begin
 			RB  		  <= x"00";
 			RC  		  <= x"00";
 			RD  		  <= x"00";
-			IR  	      <= x"00";
+			IR  	     <= x"00";
 			PC  		  <= x"00";
 			MAR 		  <= x"00";
 			MBR 		  <= "00000000";
 			SP  		  <= "11111110";
-			STATE 	      <= IDLE;
+			STATE 	  <= IDLE;
 			
 		elsif rising_edge(CLK) then
 			NEW_IR_READY <= '0';
@@ -92,10 +92,15 @@ begin
 					if DISPLAY_READY = '1' then
 						STATE <= FETCH;
 					end if;
+					
 				-- FETCH instruction from ram
 				when FETCH =>
 					--NEW_IR_READY <= '1';
 					IR <= DOUT;
+					STATE <= DECODE_1;
+				
+				-- DECODE fetched opcode
+				when DECODE_1 =>
 					
 					-- POP operation
 					if IR(7 downto 4) = "1000" and IR(1 downto 0) = "01" then
@@ -119,10 +124,10 @@ begin
 						
 					end if;
 					
-					STATE <= DECODE;
+					STATE <= DECODE_2;
 
 				-- DECODE fetched opcode 
-				when DECODE =>
+				when DECODE_2 =>
 					-- ALU operations
 					if (IR(7) = '0') then
 						if (IR(3 downto 2) = "00") then
