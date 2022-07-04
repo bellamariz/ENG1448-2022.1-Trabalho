@@ -3,12 +3,12 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity main is
-	generic( clk_slow_counter  : natural := 12_500_000 ); -- 50000000
+	generic( clk_slow_counter  : natural := 12_500_000 ); -- 50_000_000
 	port(
 		CLK 							: in  STD_LOGIC;
 		RESET							: in  STD_LOGIC;
-		LCD_E, LCD_RS, LCD_RW 	        : out STD_LOGIC;
-		SF_CE0 						    : out STD_LOGIC;
+		LCD_E, LCD_RS, LCD_RW 	: out STD_LOGIC;
+		SF_CE0 						: out STD_LOGIC;
 		LEDS							: out STD_LOGIC_VECTOR(7 downto 0);
 		DOUT_LCD						: out STD_LOGIC_VECTOR(3 downto 0)
 	);
