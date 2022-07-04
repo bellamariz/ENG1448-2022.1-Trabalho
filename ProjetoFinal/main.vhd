@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity main is
-	generic( clk_slow_counter  : natural := 50000000 ); -- 50000000
+	generic( clk_slow_counter  : natural := 12_500_000 ); -- 50000000
 	port(
 		CLK 							: in  STD_LOGIC;
 		RESET							: in  STD_LOGIC;
@@ -31,15 +31,11 @@ architecture Behavioral of main is
 	signal DISPLAY_READY 		 : STD_LOGIC := '0';
 	signal NEW_IR   	 		 : STD_LOGIC := '0';
 	signal NEW_IR_REG    		 : STD_LOGIC := '0';
-	--signal DISPLAY_STATUS    	 : STD_LOGIC := '0';
-	--signal DISPLAY_STATUS_REG    : STD_LOGIC := '0';
 
 begin
 
-	--DIN_LCD <= DOUT_RAM & POS_255;
 	DIN_LCD <= IR & POS_255;
 	NEW_IR_READY  <= NEW_IR and not(NEW_IR_REG);
-	--DISPLAY_READY <= DISPLAY_STATUS and not(DISPLAY_STATUS_REG);
 
 	-- processo para slow down o clock da CPU
 	counter_div_tempo : process(CLK, RESET)
@@ -64,7 +60,6 @@ begin
 	begin
 		if rising_edge(CLK) then
 			NEW_IR_REG <= NEW_IR;
-			--DISPLAY_STATUS_REG <= DISPLAY_STATUS;
 		end if;
 	end process;
 	

@@ -1,8 +1,8 @@
 INTSTYLE=ise
-INFILE=C:\Users\aula\Downloads\ProjetoFinal_v2\ProjetoFinal\main.ncd
-OUTFILE=C:\Users\aula\Downloads\ProjetoFinal_v2\ProjetoFinal\main.bit
+INFILE=/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/main.ncd
+OUTFILE=/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal/main.bit
 FAMILY=Spartan3E
 PART=xc3s500e-4fg320
-WORKINGDIR=C:\Users\aula\Downloads\ProjetoFinal_v2\ProjetoFinal
+WORKINGDIR=/home/ise/ise_projects/ENG1448-2022.1-Trabalho/ProjetoFinal
 LICENSE=WebPack
-USER_INFO=211165492_176193773_0_658
+USER_INFO=212493570_0_0_950

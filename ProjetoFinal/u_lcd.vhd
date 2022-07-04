@@ -135,7 +135,6 @@ architecture Behavioral of u_lcd is
 		2 => "1100", -- C 
 		3 => "0001" -- 1 
 	); 
-	--signal BIN : STD_LOGIC_VECTOR(7 downto 0) := DATA_IN(7 downto 0);
 	
 begin
 

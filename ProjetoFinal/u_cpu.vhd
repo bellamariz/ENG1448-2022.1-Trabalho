@@ -95,7 +95,6 @@ begin
 					
 				-- FETCH instruction from ram
 				when FETCH =>
-					--NEW_IR_READY <= '1';
 					IR <= DOUT;
 					STATE <= DECODE_1;
 				
@@ -479,57 +478,46 @@ begin
 					-- JMPR Rx --> pc <-- Rx
 					elsif IR(7 downto 4) = "1011" and IR(1 downto 0) = "01" then
 						PC  <= MAR;
-						--MAR <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
 						 
 					-- BZ Rx --> if (zero) pc <-- Rx else pc <-- pc + 1
 					elsif IR(7 downto 4) = "1011" and IR(1 downto 0) = "10" then
 						PC  <= MAR;
-						--MAR <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
 					
 					-- BNZ Rx --> if (not zero) pc <-- Rx else pc <-- pc + 1
 					elsif IR(7 downto 4) = "1011" and IR(1 downto 0) = "11" then
 						PC  <= MAR;
-						--MAR <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
 						
 					-- BCS Rx --> if (carry) pc <-- Rx else pc <-- pc + 1
 					elsif IR(7 downto 4) = "1100" and IR(1 downto 0) = "00" then
 						PC  <= MAR;
-						--MAR <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
 						
 					-- BCC Rx --> if (not carry) pc <-- Rx else pc <-- pc + 1
 					elsif IR(7 downto 4) = "1100" and IR(1 downto 0) = "01" then
 						PC  <= MAR;
-						--MAR <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
 						
 					-- BEQ Rx --> if (equal) pc <-- Rx else pc <-- pc + 1
 					elsif IR(7 downto 4) = "1100" and IR(1 downto 0) = "10" then
 						PC  <= MAR;
-						--MAR <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
 						
 					-- BNEQ Rx --> if (not equal) pc <-- Rx else pc <-- pc + 1
 					elsif IR(7 downto 4) = "1100" and IR(1 downto 0) = "11" then
 						PC  <= MAR;
-						--MAR <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
 						
 					-- BGT Rx --> if (greater) pc <-- Rx else pc <-- pc + 1
 					elsif IR(7 downto 4) = "1101" and IR(1 downto 0) = "00" then
 						PC  <= MAR;
-						--MAR <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
 						
 					-- BGEZ Rx --> if (greater and zero) pc <-- Rx else pc <-- pc + 1
 					elsif IR(7 downto 4) = "1101" and IR(1 downto 0) = "01" then
 						PC  <= MAR;
-						--MAR <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
 						
 					-- BLT Rx --> if (smaller) pc <-- Rx else pc <-- pc + 1
 					elsif IR(7 downto 4) = "1101" and IR(1 downto 0) = "10" then
 						PC <= MAR;
-						--MAR <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
 						
 					-- BLEZ Rx --> if (smaller and zero) pc <-- Rx else pc <-- pc + 1
 					elsif IR(7 downto 4) = "1101" and IR(1 downto 0) = "11" then
 						PC <= MAR;
-						--MAR <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
 					
 					-- HALT pc <-- pc
 					elsif IR(7 downto 4) = "1111" then
